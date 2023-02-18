@@ -1,0 +1,11 @@
+**/tmp
+**/out-tsc
+**/dist
+**/node_modules
+.vscode/*
+**/bin
+**/obj
+**/.DS.Store
+**/wwwroot/temp
+**/Temp
+**/.angular

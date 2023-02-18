@@ -1,0 +1,33 @@
+version: '3'
+
+networks:
+ virtual_network:
+  driver:brige
+
+ volumes:
+  virtual_postgres:
+   driver:local
+
+services:
+  postgres:
+    image: virtual-postgres
+    build:
+      context: .
+      dockerfile: ./postgres/dockerfile
+    restart: always
+nvironment:
+      - POSTGRES_USER=developer
+      - POSTGRES_PASSWORD=p@ssw0rd
+      - PGDATA="/data/postgres"
+      - TZ="Europe/Istanbul"
+    volumes:
+      - virtual_postgres:/data/postgres
+      - ./create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
+      command:
+      - "postgres"
+      - "-c"
+      - "shared_preload_libraries=pg_stat_statements"
+    ports:
+      - "5432:5432"
+    networks:
+      - virtual_network
